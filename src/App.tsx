@@ -73,6 +73,13 @@ const App: React.FC = () => {
     setSearchResults(prev => prev.filter(p => p.id !== item.id)); // Remove from search results
   };
 
+  // NEW: Remove functionality
+  const removeFromCollection = async (id: string) => {
+    if (confirm("Are you sure you want to remove this item?")) {
+      await db.items.delete(id);
+    }
+  };
+
   const exportData = async () => {
     const allItems = await db.items.toArray();
     const blob = new Blob([JSON.stringify(allItems, null, 2)], { type: 'application/json' });
@@ -115,17 +122,25 @@ const App: React.FC = () => {
   const renderCard = (item: CollectionItem, isResult: boolean) => (
     <div className="col-6 col-md-3 col-lg-2 mb-4" key={item.id}>
       <div className="card h-100 shadow-sm border-0">
-        <div style={{ aspectRatio: '2/3', overflow: 'hidden', background: '#eee' }}>
+        <div style={{ aspectRatio: '2/3', overflow: 'hidden', background: '#eee', position: 'relative' }}>
             <img src={item.cover_image_url} className="card-img-top h-100 w-100" style={{objectFit: 'cover'}} alt={item.title} />
         </div>
         <div className="card-body p-2 d-flex flex-column">
           <h6 className="card-title text-truncate mb-1" title={item.title}>{item.title}</h6>
           <small className="text-muted mb-2">{item.year} • {item.artist_or_producer}</small>
-          {isResult && (
-            <button className="btn btn-sm btn-primary mt-auto" onClick={() => addToCollection(item)}>
-              Add +
-            </button>
-          )}
+          
+          <div className="mt-auto">
+            {isResult ? (
+              <button className="btn btn-sm btn-primary w-100" onClick={() => addToCollection(item)}>
+                Add +
+              </button>
+            ) : (
+              <button className="btn btn-sm btn-outline-danger w-100" onClick={() => removeFromCollection(item.id)}>
+                Remove
+              </button>
+            )}
+          </div>
+
         </div>
       </div>
     </div>
