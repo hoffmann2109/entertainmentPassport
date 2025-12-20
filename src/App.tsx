@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [activeView, setActiveView] = useState<MediaType>(() => 
     (localStorage.getItem(STORAGE_KEY_VIEW) as MediaType) || 'movie'
   );
-  const [sortOrder, setSortOrder] = useState<SortOption>('added');
+  const [sortOrder, setSortOrder] = useState<SortOption>('year');
   
   // --- Search State ---
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,16 +118,35 @@ const App: React.FC = () => {
     reader.readAsText(file);
   };
 
-  // --- Render Helpers ---
+// --- Render Helpers ---
   const renderCard = (item: CollectionItem, isResult: boolean) => (
     <div className="col-6 col-md-3 col-lg-2 mb-4" key={item.id}>
       <div className="card h-100 shadow-sm border-0">
-        <div style={{ aspectRatio: '2/3', overflow: 'hidden', background: '#eee', position: 'relative' }}>
-            <img src={item.cover_image_url} className="card-img-top h-100 w-100" style={{objectFit: 'cover'}} alt={item.title} />
+        <div style={{ 
+            aspectRatio: '2/3', 
+            overflow: 'hidden', 
+            background: '#f8f9fa',
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <img 
+                src={item.cover_image_url} 
+                className="card-img-top" 
+                style={{ 
+                    objectFit: 'contain', 
+                    maxHeight: '100%',
+                    maxWidth: '100%'
+                }} 
+                alt={item.title} 
+            />
         </div>
         <div className="card-body p-2 d-flex flex-column">
           <h6 className="card-title text-truncate mb-1" title={item.title}>{item.title}</h6>
-          <small className="text-muted mb-2">{item.year} • {item.artist_or_producer}</small>
+          
+          {/* UPDATED: Removed artist_or_producer, now only shows Year */}
+          <small className="text-muted mb-2">{item.year}</small>
           
           <div className="mt-auto">
             {isResult ? (
