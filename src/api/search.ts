@@ -3,6 +3,7 @@ import { fetchMovies } from './services/movieService';
 import { fetchGames } from './services/gameService';
 import { fetchAlbums } from './services/albumService';
 import { fetchShows } from './services/tvService';
+import { fetchBooks } from './services/bookService';
 
 export const searchAPI = async (
   query: string,
@@ -24,6 +25,9 @@ export const searchAPI = async (
         break;
       case "tv":
         results.push(...(await fetchShows(query)));
+        break;
+      case "book":
+        results.push(...(await fetchBooks(query)));
         break;
     }
   } catch (error) {

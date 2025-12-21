@@ -34,7 +34,7 @@ export const AppControls: React.FC<AppControlsProps> = ({
 
       {/* View Switcher */}
       <div className="btn-group w-100 mb-3">
-        {(['movie', 'tv', 'game', 'album'] as MediaType[]).map(type => (
+        {(['movie', 'tv', 'game', 'album', 'book'] as MediaType[]).map(type => (
           <button 
               key={type}
               className={`btn ${activeView === type ? 'btn-dark' : 'btn-outline-dark'}`}

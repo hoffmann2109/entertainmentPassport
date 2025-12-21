@@ -1,4 +1,4 @@
-export type MediaType = 'movie' | 'tv' | 'game' | 'album' | 'books';
+export type MediaType = 'movie' | 'tv' | 'game' | 'album' | 'book';
 
 export interface CollectionItem {
   id: string; // Unique ID (mapped from API source)
