@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db, checkDuplicate } from './db';
+import { db, checkDuplicate } from './db/db';
 import { searchAPI } from './api/search';
 import type { CollectionItem, MediaType, SortOption } from './types/types';
 import { useLiveQuery } from 'dexie-react-hooks';
