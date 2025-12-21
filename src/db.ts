@@ -1,5 +1,5 @@
 import Dexie, { type Table } from 'dexie';
-import type { CollectionItem } from './types';
+import type { CollectionItem } from './types/types';
 
 class EntertainmentPassportDB extends Dexie {
   items!: Table<CollectionItem>;

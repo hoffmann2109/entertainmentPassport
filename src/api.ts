@@ -1,4 +1,4 @@
-import type { CollectionItem, MediaType } from './types';
+import type { CollectionItem, MediaType } from './types/types';
 
 // Helper: Standardize Errors
 const handleApiError = (msg?: string) => { throw new Error(msg || "Unable to retrieve data. Please try again."); };

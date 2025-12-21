@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, checkDuplicate } from './db';
 import { searchAPI } from './api';
-import type { CollectionItem, MediaType, SortOption } from './types';
+import type { CollectionItem, MediaType, SortOption } from './types/types';
 import { useLiveQuery } from 'dexie-react-hooks';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
