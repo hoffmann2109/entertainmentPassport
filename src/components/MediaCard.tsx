@@ -21,7 +21,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({ item, variant, onAction })
 
   return (
     <div className={colClass}>
-      <div className="card h-100 shadow-sm border-0">
+      <div className="card h-100 shadow-sm border-0 overflow-hidden">
         <div style={{ 
             aspectRatio, 
             overflow: 'hidden', 
