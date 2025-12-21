@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, checkDuplicate } from './db';
-import { searchAPI } from './api';
+import { searchAPI } from './api/search';
 import type { CollectionItem, MediaType, SortOption } from './types/types';
 import { useLiveQuery } from 'dexie-react-hooks';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -47,17 +47,22 @@ const App: React.FC = () => {
   }, [activeView]);
 
   // --- Actions ---
-  const handleSearch = async (e: React.FormEvent) => {
+const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchError(null);
     setIsSearching(true);
     setSearchResults([]);
     try {
       const results = await searchAPI(searchQuery, activeView);
-      if (results.length === 0) setSearchError("Unable to retrieve data. Please try again.");
-      setSearchResults(results);
-    } catch (err) {
-      setSearchError("Unable to retrieve data. Please try again.");
+      
+      if (results.length === 0) {
+         setSearchError("No results found."); 
+      } else {
+         setSearchResults(results);
+      }
+      
+    } catch (err: any) {
+      setSearchError(err.message || "Unable to retrieve data. Please try again.");
     } finally {
       setIsSearching(false);
     }

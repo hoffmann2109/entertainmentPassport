@@ -1,4 +1,4 @@
-import type { CollectionItem } from '../types/types';
+import type { CollectionItem, MediaType } from '../types/types';
 import { fetchMovies } from './services/movieService';
 import { fetchGames } from './services/gameService';
 import { fetchAlbums } from './services/albumService';
@@ -6,7 +6,7 @@ import { fetchShows } from './services/tvService';
 
 export const searchAPI = async (
   query: string,
-  category: "movie" | "tv" | "game" | "album"
+  category: MediaType
 ): Promise<CollectionItem[]> => {
   if (!query) return [];
   const results: CollectionItem[] = [];
