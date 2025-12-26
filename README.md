@@ -23,7 +23,7 @@ A personal media tracking application built with Electron, React, and TypeScript
 
 1.  **Clone the repository** (or unzip the source):
     ```bash
-    git clone https://github.com/yourusername/entertainment-passport.git
+    git clone https://github.com/hoffmann2109/entertainmentPassport.git
     cd entertainment-passport
     ```
 
@@ -52,7 +52,7 @@ You can run the app in a browser (web mode) or as a desktop window (Electron mod
 
 ### Building for Production
 
-To create a distributable file (e.g., `.zip`, `.deb`, `.rpm`) for your operating system:
+To create a distributable file (`.zip`) for your operating system:
 
 ```bash
 npm run make
