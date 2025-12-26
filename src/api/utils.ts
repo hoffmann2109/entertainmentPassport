@@ -9,7 +9,7 @@ export const normalize = (
   type: MediaType,
   title: string,
   artist: string,
-  img: string,
+  img: string | undefined,
   year: string | number
 ): CollectionItem => ({
   id,

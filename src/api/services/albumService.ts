@@ -1,24 +1,55 @@
 import type { CollectionItem } from '../../types/types';
-import { handleApiError, normalize } from '../utils';
+import { normalize } from '../utils';
 
-export const fetchAlbums = async (query: string): Promise<CollectionItem[]> => {
-  const targetUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=album&limit=12`;
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}&timestamp=${Date.now()}`;
+const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
 
-  const res = await fetch(proxyUrl);
-  if (!res.ok) handleApiError(`iTunes Error: ${res.status}`);
+// 1. Helper to get the temporary access token
+const getAccessToken = async () => {
+  const auth = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
+  const res = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Basic ${auth}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'grant_type=client_credentials'
+  });
 
   const data = await res.json();
-  if (!data.results || data.results.length === 0) return [];
+  return data.access_token;
+};
 
-  return data.results.map((item: any) =>
-    normalize(
-      String(item.collectionId),
-      "album",
-      item.collectionName,
-      item.artistName,
-      item.artworkUrl100?.replace("100x100", "600x600"),
-      item.releaseDate
-    )
-  );
+// 2. The new fetch function
+export const fetchAlbums = async (query: string): Promise<CollectionItem[]> => {
+  try {
+    const token = await getAccessToken(); // In a real app, cache this token!
+
+    const res = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album&limit=12`,
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    if (!res.ok) throw new Error(`Spotify Error: ${res.status}`);
+
+    const data = await res.json();
+    
+    // Map Spotify structure to your app structure
+    return data.albums.items.map((item: any) => 
+      normalize(
+        item.id,
+        "album",
+        item.name,
+        item.artists[0]?.name || "Unknown Artist",
+        item.images[0]?.url, // Spotify always provides 3 sizes. [0] is the biggest (usually 640x640)
+        item.release_date // Format is usually YYYY-MM-DD
+      )
+    );
+
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
