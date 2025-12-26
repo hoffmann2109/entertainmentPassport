@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Entertainment Passport
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal media tracking application built with Electron, React, and TypeScript. Keep track of your favorite **movies, video games, music albums, books, and TV shows** in one local, offline-first database.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Multi-Category Tracking:** Dedicated views for Movies, Games, Music, Books, and TV Shows.
+* **Search Integration:** Search for new media to add to your collection (powered by external APIs).
+* **Local Library:** Uses [Dexie.js](https://dexie.org/) (IndexedDB) to store your data locally on your device—no account required.
+* **Data Management:**
+    * Sort by Title, Year, or Date Added.
+    * Import and Export your entire library as JSON for backup.
+* **Cross-Platform:** Runs as a desktop application via Electron.
 
-## React Compiler
+## Technologies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Core:** [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/)
+* **Desktop Wrapper:** [Electron](https://www.electronjs.org/) + [Electron Forge](https://www.electronforge.io/)
+* **Database:** [Dexie.js](https://dexie.org/)
+* **Styling:** [Bootstrap 5](https://getbootstrap.com/)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1.  **Clone the repository** (or unzip the source):
+    ```bash
+    git clone https://github.com/yourusername/entertainment-passport.git
+    cd entertainment-passport
+    ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Usage
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Running in Development Mode
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+You can run the app in a browser (web mode) or as a desktop window (Electron mode).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* **Desktop App (Recommended):**
+    ```bash
+    npm start
+    ```
+    *This runs `electron-forge start`.*
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* **Web Browser Mode:**
+    ```bash
+    npm run dev
+    ```
+    *This runs the Vite development server.*
+
+### Building for Production
+
+To create a distributable file (e.g., `.zip`, `.deb`, `.rpm`) for your operating system:
+
+```bash
+npm run make
